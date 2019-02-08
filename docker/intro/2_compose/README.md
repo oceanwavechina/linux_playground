@@ -1,24 +1,10 @@
-# Docker Compose
+# docker compose
 
-在有多个service的时候，如果每个都进行build、run，会比较繁琐，docker compose可以通过配置的方式来统一部署
-
-#### 架构描述
+#### 简介
 ----------------------
   
+  website是client提供接口的web层，而product是后端的 micro-service 中的一个服务<br>
   这个例子是如何利用compose自动化部署多服务的应用
-
-  website是client提供接口的web层，而product是后端的 micro-service 中的一个服务
-  
-                                            +++++++++++++++++++
-    ++++++++++++++++++++                    | micro-service 1 |
-    |                  |                    +++++++++++++++++++
-    |                  |  --> request  -->  |        .        |
-    |     website      |  <-- response <--  |        .        |
-    |                  |                    |        .        |
-    |                  |                    +++++++++++++++++++
-    ++++++++++++++++++++                    | micro-service n |
-                                            +++++++++++++++++++
-
 
 #### Note
 ----------------------
@@ -33,11 +19,7 @@
 #### 步骤 
 ----------------------
 
-准备好服务程序
-
-1. 编写docker-compose.yml文件，描述每个服务
-
-2. 部署运行:  
+* 部署运行:  
 
   <code>
   docker-compose up
@@ -51,7 +33,7 @@
   
       96b3503c9dba        2_compose_product-service   "python api.py"          32 minutes ago      Up 3 minutes        0.0.0.0:5001->80/tcp   2_compose_product-service_1
 
-3. 停止
+* 停止
 
   <code>
   docker-compose stop

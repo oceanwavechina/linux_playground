@@ -1,4 +1,4 @@
-# Docker Compose
+# Docker Cloud Deployment
 
 在有多个service的时候，如果每个都进行build、run，会比较繁琐，docker compose可以通过配置的方式来统一部署
 
@@ -13,8 +13,8 @@
     ++++++++++++++++++++                    | micro-service 1 |
     |                  |                    +++++++++++++++++++
     |                  |  --> request  -->  |        .        |
-    |     website      |  <-- response <--  |        .        |
-    |                  |                    |        .        |
+    |     website      |  <-- response <--  |     (pyhton)    |
+    |      (php)       |                    |        .        |
     |                  |                    +++++++++++++++++++
     ++++++++++++++++++++                    | micro-service n |
                                             +++++++++++++++++++

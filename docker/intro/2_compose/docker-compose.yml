@@ -1,0 +1,21 @@
+# doker compose format version
+version: '3'
+
+services:
+  product-service:
+    build: ./product
+    volumes:
+      # 因为我们用的是映射的方式所以对源文件的修改马上能生效
+      - ./product:/usr/src/app/
+    ports:
+      - 5001:80
+  
+  website:
+    build: ./website #  这个是我们之前build好的image
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - 5000:80
+    depends_on:
+      - product-service
+    
