@@ -36,20 +36,28 @@
 
 3. 通过search查看审计日志
    
+   日志文件一般 /var/log/audit/audit.log<br>
+   其位置配置在 /etc/audit/auditd.conf 文件中<br>
+   可以使用搜索命令来过滤:
+
    <code>sudo ausearch -f/etc/passwd | grep useradd</code>
-    > type=SYSCALL msg=audit(1549270599.815:36): arch=c000003e syscall=2 success=yes exit=5 a0=7f649d8ecc00 a1=20902 a2=0 a3=7f649ce27460 items=1 ppid=2316 pid=2317 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="useradd" exe="/usr/sbin/useradd" key="passwd_changes"<br>
-    <br>
-    > type=SYSCALL msg=audit(1549270599.827:40): arch=c000003e syscall=82 success=yes exit=0 a0=7ffcbefe0ca0 a1=7f649d8ecc00 a2=7ffcbefe0c10 a3=7f649ce276a0 items=5 ppid=2316 pid=2317 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="useradd" exe="/usr/sbin/useradd" key="passwd_changes"
+    
+   结果如下:
+
+   > type=SYSCALL msg=audit(1549270599.815:36): arch=c000003e syscall=2 success=yes exit=5 a0=7f649d8ecc00 a1=20902 a2=0 a3=7f649ce27460 items=1 ppid=2316 pid=2317 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="useradd" exe="/usr/sbin/useradd" key="passwd_changes"<br>
+    
+    
+   > type=SYSCALL msg=audit(1549270599.827:40): arch=c000003e syscall=82 success=yes exit=0 a0=7ffcbefe0ca0 a1=7f649d8ecc00 a2=7ffcbefe0c10 a3=7f649ce276a0 items=5 ppid=2316 pid=2317 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="useradd" exe="/usr/sbin/useradd" key="passwd_changes"
    
    参数说明：
-    > time :审计时间<br>
-    > name :审计对象<br>
-    > cwd :当前路径<br>
-    > syscall :相关的系统调用<br>
-    > auid :审计用户ID<br>
-    > uid和 gid :访问文件的用户ID和用户组ID<br>
-    > comm :用户访问文件的命令<br>
-    > exe :上面命令的可执行文件路径
+   > time :审计时间<br>
+   > name :审计对象<br>
+   > cwd :当前路径<br>
+   > syscall :相关的系统调用<br>
+   > auid :审计用户ID<br>
+   > uid和 gid :访问文件的用户ID和用户组ID<br>
+   > comm :用户访问文件的命令<br>
+   > exe :上面命令的可执行文件路径
 
 4. 通过report 查看生成的审计报告
    可以看到failed authentications 是2，因为我两次尝试用iceserver账户ssh登录失败了
