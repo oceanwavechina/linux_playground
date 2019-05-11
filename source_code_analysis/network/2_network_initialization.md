@@ -1,44 +1,46 @@
-### Network Initialization
----------------------
+# Network Initialization
 
 1. what happens when the Linux operating system boots
 2. how the kernel and supporting programs ifconfig and route establish network links
 3. the differences between several example configurations
 4. summarizes the implementation code within the kernel and network programs
 
-#### 1. 核心结构 (include/linux/skbuff.h)
+## 1. 启动 (startup)
 ---------------------
 
-```c
-struct sk_buff
-```
+1. 从磁盘加载 image 到内存，解包镜像
+2. 安装文件系统，内存管理系统，和其他关键的系统
+3. 执行 init 程序
+   1. 读取配置文件 /etc/inittab
+   2. 执行启动脚本 /etc/rc.d 其中包含了网络初始化脚本 /etc/rc.d/init.d/network
 
-1. 节省时间，因为linux的协议栈是严格的layer结构，layer之间的数据传递 基本上 只需通过指针实现
-2. 数据的拷贝只需两次， 一是，user-space 到 kernel-space之间； 二是，kernel-space到输出媒介之间
-3. 每层只需填充自己处理packet时需要的数据
+### 1.1 网络初始化脚本 (The Network Initialization Script)
+   
+唤起各种程序
 
 <br>
 
-#### 2. 路由 （Internet Routing）
----------------------
+### 1.2 接口设备配置 (ifconfig)
 
-DataStructure:
+这个程序用来配置 interface device, 但它并不是内核的一部分。
 
-  1. **FIB (Forwarding Infomation Base)**
-   
-     这个结构保存了所有已知的路由信息，是完整的路由信息
-     按bit分成了32个zone
-     1. zone的id是由，ip和掩码产生的有效位来确定的，比如子网掩码为255.0.0.0的网络的有效位是8，其entry就会放在zone-8中
-     2. 每个zone中存放的是具体的e路由entry
-     3. 在文件 /proc/net/route 中
+1. 首先，它给这些设备提供ip地址，网络掩码，和广播地址
+2. 接下来，这些设备执行它自己的初始化函数，比如设置一些静态变量，在kernel中注册中断和服务程序
 
-  2. **Routing Cache**
+执行ficonfig会返回当前interface的配置信息和状态
 
-     1. 当前正在使用的destination的缓存
-     2. 这个是一个hash table
-     3. 在文件 /proc/net/rt_cache 中
+```
+eth0  Link encap:Ethernet  HWaddr 00:C1:4E:7D:9E:25
+      inet addr:172.16.1.1  Bcast:172.16.1.255  Mask:255.255.255.0
+      UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+      RX packets:389016 errors:16534 dropped:0 overruns:0 frame:24522
+      TX packets:400845 errors:0 dropped:0 overruns:0 carrier:0
+      collisions:0 txqueuelen:100
+      Interrupt:11 Base address:0xcc00
+```
 
+<br>
 
-  3. **Neighbor table**
+### 1.3 路由 （route）
 
-     直接物理相连的的机器的信息
+这个程序对interface device 添加预先定义的路由信息到FIB(Forwarding Information Base), 和也不是内核的一部分。
