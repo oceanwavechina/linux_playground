@@ -9,6 +9,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+/*
+ 	 彻底学会使用epoll(一)——ET模式实现分析
+ 	 http://blog.chinaunix.net/uid-28541347-id-4273856.html
+ */
+
 #define MAXLINE     10
 #define OPEN_MAX    100
 #define LISTENQ     20
