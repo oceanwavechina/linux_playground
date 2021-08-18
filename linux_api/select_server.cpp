@@ -110,6 +110,9 @@ int main(int argc, char* argv[])
         //If something happened on the master socket , then its an incoming connection
         if (FD_ISSET(listen_fd, &read_fds)) {
 
+#if 1
+			printf("New connection, and it's using the level trigger\n");
+#else
         	if ((new_client_fd = accept(listen_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
                 perror("accept");
                 exit(EXIT_FAILURE);
@@ -133,6 +136,7 @@ int main(int argc, char* argv[])
                     break;
                 }
             }
+#endif
         }
 
         int valread = -1;
