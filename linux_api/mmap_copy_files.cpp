@@ -4,10 +4,6 @@
  *  Created on: Nov 19, 2016
  *      Author: liuyanan
  */
-
-
-
-
 #include <iostream>
 #include <stdlib.h>
 #include <unistd.h>
@@ -23,13 +19,11 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	int fd_src = -1;
-	void *sm , *dm= NULL;
 
 	if (argc !=2 ) {
-		cerr << "Usage: " << argv[0];
+		cerr << "Usage: " << argv[0] << "<filename>" ;
 		exit(EXIT_FAILURE);
 	}
-
 
 	if ((fd_src = open(argv[1], O_RDONLY)) < 0) {
 		cerr << "open file error !";
@@ -39,7 +33,7 @@ int main(int argc, char* argv[])
 	struct stat statbuf;
 	stat(argv[1], &statbuf);
 
-	sm = mmap(NULL, (size_t)statbuf.st_size, PROT_READ, MAP_PRIVATE, fd_src, 0);
+	void* sm = mmap(NULL, (size_t)statbuf.st_size, PROT_READ, MAP_PRIVATE, fd_src, 0);
 
 
 	write(STDOUT_FILENO, sm, statbuf.st_size);

@@ -32,10 +32,14 @@ add_executable(dummy_test ${dummy_test_SRC})
 set(fork_test_SRC fork_test.cpp)
 add_executable(fork_test ${fork_test_SRC})
 
-
-endif(0)
-
 # measure_syscall_time.cpp
 set(measure_syscall_time_SRC measure_syscall_time.cpp)
 add_executable(measure_syscall_time ${measure_syscall_time_SRC})
 target_link_libraries(measure_syscall_time pthread) 
+
+
+endif(0)
+
+# mmap_copy_files.cpp
+set(mmap_copy_files_SRC mmap_copy_files.cpp)
+add_executable(mmap_copy_files ${mmap_copy_files_SRC})
