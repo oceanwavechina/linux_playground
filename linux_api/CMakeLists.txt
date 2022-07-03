@@ -35,7 +35,7 @@ add_executable(fork_test ${fork_test_SRC})
 
 endif(0)
 
-# mutex_and_condition_var.cpp
-set(mutex_and_condition_var_SRC mutex_and_condition_var.cpp)
-add_executable(mutex_and_condition_var ${mutex_and_condition_var_SRC})
-target_link_libraries(mutex_and_condition_var pthread) 
+# measure_syscall_time.cpp
+set(measure_syscall_time_SRC measure_syscall_time.cpp)
+add_executable(measure_syscall_time ${measure_syscall_time_SRC})
+target_link_libraries(measure_syscall_time pthread) 
